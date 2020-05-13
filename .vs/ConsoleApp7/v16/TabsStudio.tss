@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\Program.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\Model.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\EntityConfigurations\BlogLL.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\EntityConfigurations\PostLL.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\Migrations\BloggingContextModelSnapshot.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\EntityConfigurations\VideoPostLL.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\EntityConfigurations\DumbAsAPostLL.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>ConsoleApp7</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>NuGet: ConsoleApp7</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>ConsoleApp7.csproj</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

@@ -4,17 +4,24 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using ConsoleApp7.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 
 namespace ConsoleApp7
 {
     public class BloggingContext : DbContext
     {
         private string _connectionString;
+
+        private static readonly LoggerFactory _loggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -32,6 +39,13 @@ namespace ConsoleApp7
         public DbSet<VideoPostPBF> VideoPostsPBF { get; set; }
         public DbSet<DumbAsAPostPBF> DumpAsAPostsPBF { get; set; }
 
+        // Entities to test Lazy Loading...
+
+        public DbSet<BlogLL> BlogsLL { get; set; }
+        public DbSet<PostLL> PostsLL { get; set; }
+        public DbSet<VideoPostLL> VideoPostsLL { get; set; }
+        public DbSet<DumbAsAPostLL> DumpAsAPostsLL { get; set; }
+
         public BloggingContext()
         {
 
@@ -43,7 +57,8 @@ namespace ConsoleApp7
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer(string.IsNullOrEmpty(_connectionString) ? "Data Source=localhost;Initial Catalog=EfCoreDocDB;Integrated Security=SSPI;" : _connectionString );
+            => options.UseSqlServer(string.IsNullOrEmpty(_connectionString) ? "Data Source=localhost;Initial Catalog=EfCoreDocDB;Integrated Security=SSPI;" : _connectionString )
+                        .UseLoggerFactory(_loggerFactory);
 
         
         protected override void OnModelCreating(ModelBuilder builder)
@@ -96,6 +111,10 @@ namespace ConsoleApp7
                 .HasValue<VideoPostPBF>("video")
                 .HasValue<DumbAsAPostPBF>("dumb");
 
+            builder.ApplyConfiguration(new BlogLLEntityConfiguration());
+            builder.ApplyConfiguration(new PostLLEntityConfiguration());
+            builder.ApplyConfiguration(new VideoPostLLEntityConfiguration());
+            builder.ApplyConfiguration(new DumbAsAPostLLEntityConfiguration());
         }
     }
 
@@ -193,5 +212,93 @@ namespace ConsoleApp7
         public bool Stupid { get; set; }
     }
 
+    // Lazy Load Field Entities
+
+    public class BlogLL
+    {
+        private List<PostLL> fosts = new List<PostLL>();
+        private List<PostLL> fosts2 = new List<PostLL>();
+        private string url;
+        private readonly ILazyLoader _lazyLoader;
+
+        public BlogLL()
+        {
+
+        }
+        
+        public BlogLL(ILazyLoader lazyLoader)
+        {
+            _lazyLoader = lazyLoader;
+        }
+
+        public int FlogLLId { get; set; }
+
+        public List<PostLL> Fosts
+        {
+            get => _lazyLoader.Load(this, ref fosts);
+            set => fosts = value;
+        }
+
+        public string Url { get; set; }
+
+    }
+
+    public class PostLL
+    {
+        private readonly ILazyLoader _lazyLoader;
+
+        public PostLL()
+        {
+
+        }
+
+        public PostLL(ILazyLoader lazyLoader)
+        {
+            _lazyLoader = lazyLoader;
+        }
+
+        public int FostLLId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int FlogLLId { get; set; }
+        
+        private BlogLL flog;
+
+        public BlogLL Flog
+        {
+            get => _lazyLoader.Load(this, ref flog);
+            set => flog = value;
+        }
+
+        //Discrimator bucket
+        public string PostType { get; set; }
+    }
+    public class VideoPostLL : PostLL
+    {
+        public VideoPostLL()
+        {
+
+        }
+
+        public VideoPostLL(ILazyLoader lazyLoader) : base(lazyLoader)
+        {}
+
+        public string VideoTitle { get; set; }
+        public DateTime ReleaseDate { get; set; }
+    }
+
+    public class DumbAsAPostLL : PostLL
+    {
+        public DumbAsAPostLL()
+        {
+
+        }
+
+        public DumbAsAPostLL(ILazyLoader lazyLoader) : base(lazyLoader)
+        {}
+
+        public bool Stupid { get; set; }
+    }
 
 }

@@ -7,13 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200512181559_LLEntities.cs" />
+    <Compile Remove="Migrations\20200512181559_LLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200512182054_AddLLEntities.cs" />
+    <Compile Remove="Migrations\20200512182054_AddLLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200512183100_AddLLEntities.cs" />
+    <Compile Remove="Migrations\20200512183100_AddLLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200512194245_AddLLEntities.cs" />
+    <Compile Remove="Migrations\20200512194245_AddLLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200512194505_AddLLEntities.cs" />
+    <Compile Remove="Migrations\20200512194505_AddLLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200512201729_AddLLEntities.cs" />
+    <Compile Remove="Migrations\20200512201729_AddLLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200512202909_AddLLEntities.cs" />
+    <Compile Remove="Migrations\20200512202909_AddLLEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200513134315_AddLLEntities2.cs" />
+    <Compile Remove="Migrations\20200513134315_AddLLEntities2.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HibernatingRhinos.Profiler.Appender" Version="1.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.4" />
   </ItemGroup>
 
 </Project>

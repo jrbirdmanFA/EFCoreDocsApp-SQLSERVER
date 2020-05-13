@@ -87,4 +87,5 @@ C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\bin\Debug\n
 C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\bin\Debug\netcoreapp3.1\HibernatingRhinos.Profiler.Appender.dll
+C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Debug.dll
 C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\obj\Debug\netcoreapp3.1\ConsoleApp7.csproj.CoreCompileInputs.cache
