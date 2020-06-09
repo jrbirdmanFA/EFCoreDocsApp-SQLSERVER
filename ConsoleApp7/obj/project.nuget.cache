@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "O/PiJcYF//EzbVzbX0ky1hRLU6KJWb2fDFB6iu76r0NA37AJa4f3SsTfuQxkVK/HCb2yzjZG8wOKjx3iazwuYA==",
+  "dgSpecHash": "OSuIw/mtZ3OOHV6y18qLVI7IBHZXbKHQHmlMpKZv1LeFZc0UBuCNNbL/FZ6Z5U7g3nRbXNaZD84rM4i4nFlyvw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Dave Diehl\\source\\repos\\EFCoreDocsApp-SQLSERVER\\ConsoleApp7\\ConsoleApp7.csproj",
   "expectedPackageFiles": [
@@ -105,7 +105,8 @@
     "C:\\Users\\Dave Diehl\\.nuget\\packages\\system.threading.tasks.extensions\\4.0.0\\system.threading.tasks.extensions.4.0.0.nupkg.sha512",
     "C:\\Users\\Dave Diehl\\.nuget\\packages\\system.threading.timer\\4.0.1\\system.threading.timer.4.0.1.nupkg.sha512",
     "C:\\Users\\Dave Diehl\\.nuget\\packages\\system.xml.readerwriter\\4.0.11\\system.xml.readerwriter.4.0.11.nupkg.sha512",
-    "C:\\Users\\Dave Diehl\\.nuget\\packages\\system.xml.xdocument\\4.0.11\\system.xml.xdocument.4.0.11.nupkg.sha512"
+    "C:\\Users\\Dave Diehl\\.nuget\\packages\\system.xml.xdocument\\4.0.11\\system.xml.xdocument.4.0.11.nupkg.sha512",
+    "C:\\Users\\Dave Diehl\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
   ],
   "logs": []
 }

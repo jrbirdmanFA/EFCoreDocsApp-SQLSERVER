@@ -31,5 +31,11 @@
     <ArrayOfString>
       <string>ConsoleApp7.csproj</string>
     </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Dave Diehl\source\repos\EFCoreDocsApp-SQLSERVER\ConsoleApp7\Migrations\20200513135616_AddLLEntities.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>Source Control Explorer - Disconnected</string>
+    </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

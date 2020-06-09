@@ -23,28 +23,44 @@ namespace ConsoleApp7
 
         private static readonly LoggerFactory _loggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
 
+        #region Doc Entities
+
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<VideoPost> VideoPosts { get; set; }
         public DbSet<DumbAsAPost> DumbAsAPosts { get; set; }
+        #endregion
 
-        // Entities to terst BigInt vs Int PKs...
+        #region BitInt Entities
+
         //public DbSet<TestBigInt> TestBigInts { get; set; }
         //public DbSet<TestBigIntOrg> TestBigIntsOrg { get; set; }
-
         // Entities to test Private Backing Fields...
+        #endregion
+
+        #region Private Backing Field Entities
 
         public DbSet<BlogPBF> BlogsPBF { get; set; }
         public DbSet<PostPBF> PostsPBF { get; set; }
         public DbSet<VideoPostPBF> VideoPostsPBF { get; set; }
         public DbSet<DumbAsAPostPBF> DumpAsAPostsPBF { get; set; }
+        #endregion
 
-        // Entities to test Lazy Loading...
+        #region LazyLoading Entities
 
         public DbSet<BlogLL> BlogsLL { get; set; }
         public DbSet<PostLL> PostsLL { get; set; }
         public DbSet<VideoPostLL> VideoPostsLL { get; set; }
         public DbSet<DumbAsAPostLL> DumpAsAPostsLL { get; set; }
+        #endregion
+
+        #region TPH Nav Property Loading Entities
+
+        public DbSet<BlogTPH> BlogsTPH { get; set; }
+        public DbSet<PostTPH> PostsTPH { get; set; }
+        public DbSet<VideoPostTPH> VideoPostsTPH { get; set; }
+        public DbSet<DumbAsAPostTPH> DumpAsAPostsTPH { get; set; }
+        #endregion
 
         public BloggingContext()
         {
@@ -91,6 +107,8 @@ namespace ConsoleApp7
 
             //Configs for Private Backing Field examples
 
+            #region Private Backing field Configurations
+
             builder.Entity<BlogPBF>()
                 .ToTable("BlogsPBF")
                 .HasKey(x => x.BlogId);
@@ -110,13 +128,37 @@ namespace ConsoleApp7
                 .HasDiscriminator<string>("Discriminator")
                 .HasValue<VideoPostPBF>("video")
                 .HasValue<DumbAsAPostPBF>("dumb");
+            #endregion
+
+            #region Lazy Loading Configurations
 
             builder.ApplyConfiguration(new BlogLLEntityConfiguration());
             builder.ApplyConfiguration(new PostLLEntityConfiguration());
             builder.ApplyConfiguration(new VideoPostLLEntityConfiguration());
             builder.ApplyConfiguration(new DumbAsAPostLLEntityConfiguration());
+            #endregion
+
+            #region TPH Nav Property Loading Configurations
+
+            builder.Entity<BlogTPH>()
+                .HasKey(x => x.BlogId);
+
+            builder.Entity<PostTPH>()
+                .HasKey(x => x.PostId);
+
+            builder.Entity<WidgetTPH>()
+                .HasKey(x => x.WidgetId);
+
+            builder.Entity<PostTPH>()
+                .HasOne(x => x.Foobar)
+                .WithMany()
+                .HasForeignKey(x => x.WidgetId);
+
+            #endregion
         }
     }
+
+    #region Doc Entities
 
     public class Blog
     {
@@ -149,8 +191,10 @@ namespace ConsoleApp7
     {
         public bool Stupid { get; set; }
     }
+    #endregion
 
-    // BigInt Test Entities
+    #region BigInt Entities
+
     public class TestBigInt
     {
         [Column(TypeName = "bigint")]
@@ -166,9 +210,9 @@ namespace ConsoleApp7
 
         public string MyProperty { get; set; }
     }
+    #endregion
 
-
-    // Private Backing Field Entities
+    #region Private Backing Fields Entities
 
     public class BlogPBF
     {
@@ -211,13 +255,13 @@ namespace ConsoleApp7
     {
         public bool Stupid { get; set; }
     }
+    #endregion
 
-    // Lazy Load Field Entities
+    #region LazyLoading Entities
 
     public class BlogLL
     {
         private List<PostLL> fosts = new List<PostLL>();
-        private List<PostLL> fosts2 = new List<PostLL>();
         private string url;
         private readonly ILazyLoader _lazyLoader;
 
@@ -300,5 +344,49 @@ namespace ConsoleApp7
 
         public bool Stupid { get; set; }
     }
+    #endregion
+
+    #region TPH Nav Property Loading Entities
+
+    public class BlogTPH
+    {
+        public int BlogId { get; set; }
+
+        public string Url { get; set; }
+
+        public List<PostTPH> Posts { get; } = new List<PostTPH>();
+    }
+
+    public class PostTPH
+    {
+        public int PostId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        public int BlogId { get; set; }
+        public BlogTPH Blog { get; set; }
+
+        public string Discriminator { get; set; }
+
+        public int? WidgetId { get; set; }
+        public WidgetTPH Foobar { get; set; }
+    }
+
+    public class VideoPostTPH : PostTPH
+    {
+        public string VideoTitle { get; set; }
+        public DateTime ReleaseDate { get; set; }
+    }
+
+    public class DumbAsAPostTPH : PostTPH
+    {
+        public bool Stupid { get; set; }
+    }
+
+    public class WidgetTPH
+    {
+        public int WidgetId { get; set; }
+    }
+    #endregion
 
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp7
 {
@@ -13,7 +14,7 @@ namespace ConsoleApp7
         {
             //HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
-            string[] testsToRun = new string[3] { "xStandard", "xPBF", "LL" };
+            string[] testsToRun = new string[4] { "xStandard", "xPBF", "xLL", "TPH" };
 
             using (var db = new BloggingContext())
             {
@@ -145,11 +146,74 @@ namespace ConsoleApp7
 
                     // Read
                     Console.WriteLine("Querying for a blog");
-                    var blog3 = db.BlogsLL.Find(1);  //this should fire a query without a join.
-                    blog3.Fosts.ForEach(f => Console.WriteLine($" LL1 Post Dump: {f.PostType} {f.FostLLId} {f.Title}"));
+                    //var blog3 = db.BlogsLL.Find(1);  //this should fire a query without a join.
+                    //blog3.Fosts.ForEach(f => Console.WriteLine($" LL1 Post Dump: {f.PostType} {f.FostLLId} {f.Title}"));
 
-                    var blogs4 = db.BlogsLL.AsQueryable().Include(x => x.Fosts).SingleOrDefault(x => x.FlogLLId == 1); //Will this throw an error?  nope but it does do a join.
-                    blogs4.Fosts.ForEach(f => Console.WriteLine($" LL2 Post Dump: {f.PostType} {f.FostLLId} {f.Title}"));
+                    //var blogs4 = db.BlogsLL.AsQueryable().Include(x => x.Fosts).SingleOrDefault(x => x.FlogLLId == 1); //Will this throw an error?  nope but it does do a join.
+                    //blogs4.Fosts.ForEach(f => Console.WriteLine($" LL2 Post Dump: {f.PostType} {f.FostLLId} {f.Title}"));
+
+                    var blog5 = db.BlogsLL.Find(1);  //this should fire a query without a join.
+                    blog5.Fosts.Where(x => x.FostLLId == 3).ToList().ForEach(f => Console.WriteLine($" LL3 Post Dump: {f.PostType} {f.FostLLId} {f.Title}"));
+                }
+
+                if (Array.Exists(testsToRun, x => x == "TPH"))
+                {
+                    // Create
+                    Console.WriteLine("Inserting a new blog");
+                    db.Add(new BlogTPH { Url = "http://blogs.msdn.com/adonet" });
+                    db.SaveChanges();
+
+                    // Read
+                    Console.WriteLine("Querying for a blog");
+                    var blog = db.BlogsTPH
+                        .OrderBy(b => b.BlogId)
+                        .First();
+
+                    var newWidget = new WidgetTPH();
+                    db.Add(newWidget);
+                    db.SaveChanges();
+
+                    // Update
+                    Console.WriteLine("Updating the blog and adding a post");
+                    blog.Url = "https://devblogs.microsoft.com/dotnet";
+                    blog.Posts.Add(
+                        new PostTPH
+                        {
+                            Title = "Hello World",
+                            Content = "I wrote an app using EF Core!",
+                            Foobar = newWidget
+                        });
+                    db.SaveChanges();
+
+                    blog.Posts.Add(
+                        new VideoPostTPH
+                        {
+                            Title = "Hello World, The Movie",
+                            Content = "Lareum ipsum, alpha, beta, crapper...",
+                            VideoTitle = "this is the video title",
+                            ReleaseDate = DateTime.Today.AddDays(-300),
+                            Foobar = newWidget
+                        });
+                    blog.Posts.Add(
+                        new DumbAsAPostTPH
+                        {
+                            Title = "Hello World, The Movie",
+                            Content = "Lareum ipsum, alpha, beta, crapper...",
+                            Stupid = true,
+                            Foobar = newWidget
+                        }); ;
+                    db.SaveChanges();
+
+                    var blogList = db.BlogsTPH.ToList();
+                    foreach (var b in blogList)
+                    {
+                        Console.WriteLine($"Blog Dump: {b.Url}");
+                        foreach (var p in b.Posts)
+                        {
+                            Console.WriteLine($" Post Dump: {p.PostId} {p.Title} WidgetID: {p.Foobar.WidgetId}");
+                        }
+                    }
+
                 }
 
                 ///
